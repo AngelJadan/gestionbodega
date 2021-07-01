@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+<h:head>
+	<meta></meta>
+</h:head>
+<!-- Bootstrap core CSS -->
+<h:outputScript name="bootstrap/js/bootstrap.js" />
+<h:outputScript name="bootstrap/js/bootstrap.min.js" />
+<h:outputStylesheet name="bootstrap/css/bootstrap.css" />
+<body>
+	<script type="text/javascript" src="js/register.js"></script>
+	<div style="width: 200px;">
+		<a style="margin-left: 100px; margin-top: 20px"
+			href="/gestionbodega/HTMLs/login.html">Volver</a>
+		<h:form
+			style="margin-left: 100px; margin-top: 50px; width: 400px; background-color: #4CAF50; border: 10px solid #4CAF50;">
+
+			<h:panelGrid columns="2">
+				<h:outputLabel value="Nombre" />
+				
+
+				<h:inputText value="#{usuarioBean.nombre}" class="form-control" />
+				
+				<h:outputLabel value="Tipo" />
+ 				
+				<h:selectOneMenu value="#{usuarioBean.tipo}">
+					<f:selectItem itemValue="administrador" itemLabel="Administrador" />
+					<f:selectItem itemValue="trabajador" itemLabel="Trabajador" />
+				</h:selectOneMenu>
+
+				
+				<h:outputLabel value="Password" />
+				
+				<h:inputSecret value="#{usuarioBean.password}" class="form-control" />
+
+				<h:commandButton action="#{usuarioBean.save()}" value="Guardar" />
+				<h:commandButton action="#{usuarioBean.search()}" value="Buscar" />
+			</h:panelGrid>
+
+		</h:form>
+	</div>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Gestión cliente</title>
+	<meta charset="utf-8"/>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<!--     Fonts and icons     -->
+	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"/>
+    <!-- Material Kit CSS -->
+    <link href="/gestionbodega/JSFs/assets/css/material-dashboard.css?v=2.1.2" rel="stylesheet" />
+</h:head>
+<body>
+<style>
+		.tabla {
+			border-collapse: collapse;
+		}
+		
+		.cabeceraTabla {
+			text-align: center;
+			background: none repeat scroll 0 0 #E5E5E5;
+			border-bottom: 1px solid #BBBBBB;
+			padding: 8px;
+		}
+		
+		.filaPar {
+			text-align: center;
+			background: none repeat scroll 0 0 #FFFFFFF;
+			border-top: 1px solid #BBBBBB;
+		}
+		
+		.filaImpar {
+			text-align: center;
+			background: none repeat scroll 0 0 #F9F9F9;
+			border-top: 1px solid #BBBBBB;
+		}
+	</style>
+  <div class="wrapper ">
+    <div class="sidebar" data-color="purple" data-background-color="white">
+      <!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+      <div class="logo">
+        <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+          CT
+        </a>
+        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+          Creative Tim
+        </a>
+      </div>
+      <div class="sidebar-wrapper">
+        <ul class="nav">
+          <li class="nav-item active  ">
+            <a class="nav-link" href="#0">
+              <i class="material-icons">dashboard</i>
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <!-- your sidebar here -->
+        </ul>
+        <ul class="nav">
+          <li class="nav-item active  ">
+            <a class="nav-link" href="/gestionbodega/JSFs/CrearFactura.xhtml">
+              <i class="material-icons">crear_cliente</i>
+              <p>Facturación</p>
+            </a>
+          </li>
+          <!-- your sidebar here -->
+        </ul>
+
+      </div>
+    </div>
+    <div class="main-panel">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+        <div class="container-fluid">
+          <div class="navbar-wrapper">
+            <a class="navbar-brand" href="javascript:;">Dashboard</a>
+          </div>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+            <span class="navbar-toggler-icon icon-bar"></span>
+          </button>
+          <div class="collapse navbar-collapse justify-content-end">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:;">
+                  <i class="material-icons">notifications</i> Notifications
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="javascript:;">
+                  <i class="material-icons">profile</i> Perfil
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="content">
+        <div class="container-fluid">
+          <h:form>
+          <h:panelGrid>
+          <h:outputLabel value="Cedula" />
+          <h:inputText value="#{clienteBean.cedula}" />
+          <h:outputLabel value="Nombre" />
+          <h:inputText value="#{clienteBean.nombre}" />
+          <h:outputLabel value="Apellido" />
+          <h:inputText value="#{clienteBean.apellido}" />
+          <h:outputLabel value="Direccion" />
+          <h:inputText value="#{clienteBean.direccion}" />
+          <h:outputLabel value="Correo" />
+          <h:inputText value="#{clienteBean.correo}" />
+          
+          <h:commandButton action="#{clienteBean.save()}" value="Guardar" />
+          
+          </h:panelGrid>
+          </h:form>
+          
+          
+          <h:form>
+		<h:dataTable value="#{clienteBean.list}" var="c" styleClass="tabla"
+			headerClass="cabeceraTabla" rowClasses="filaPar,filaImpar">
+			<h:column>
+				<f:facet name="header">Id</f:facet>#{c.id}</h:column>
+			<h:column>
+				<f:facet name="header">Cedula</f:facet>
+				<h:inputText value="#{c.cedula}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText value="#{c.cedula}" rendered="#{not c.editable}" />
+			</h:column>
+     		<h:column>
+				<f:facet name="header">Nombre</f:facet>
+				<h:inputText value="#{c.nombre}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText value="#{c.nombre}" rendered="#{not c.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Apellido</f:facet>
+				<h:inputText value="#{c.apellido}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText value="#{c.apellido}" rendered="#{not c.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Direccion</f:facet>
+				<h:inputText value="#{c.direccion}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText value="#{c.direccion}" rendered="#{not c.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Correo</f:facet>
+				<h:inputText value="#{c.correo}" size="10"
+					rendered="#{c.editable}" />
+				<h:outputText value="#{c.correo}" rendered="#{not c.editable}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Accion</f:facet>
+				<h:commandLink value="Eliminar" action="#{clienteBean.delete(c)}" />
+			</h:column>
+			<h:column>
+				<f:facet name="header">Accion</f:facet>
+				<h:commandLink value="Editar" action="#{clienteBean.edit(c)}"
+					rendered="#{not c.editable}" />
+				<h:commandLink value="Actualizar" action="#{clienteBean.update(c)}"
+					rendered="#{c.editable}" />
+			</h:column>
+		</h:dataTable>
+	</h:form>
+        </div>
+      </div>
+      <footer class="footer">
+        <div class="container-fluid">
+          <nav class="float-left">
+            <ul>
+              <li>
+                <a href="https://www.creative-tim.com">
+                  Creative Tim
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <div class="copyright float-right">
+            &copy;
+            <script>
+              document.write(new Date().getFullYear())
+            </script>, made with <i class="material-icons">favorite</i> by
+            <a href="https://www.creative-tim.com" target="_blank">Creative Tim</a> for a better web.
+          </div>
+          <!-- your footer here -->
+        </div>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

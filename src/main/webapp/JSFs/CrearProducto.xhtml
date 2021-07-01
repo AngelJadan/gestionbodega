@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head>
+	<title>Administración de producto</title>
+	<meta charset="utf-8" />
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<!--     Fonts and icons     -->
+	<link rel="stylesheet" type="text/css"
+		href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+	<!-- Material Kit CSS -->
+	<link
+		href="/gestionbodega/JSFs/assets/css/material-dashboard.css?v=2.1.2"
+		rel="stylesheet" />
+</h:head>
+<body>
+	<div class="wrapper ">
+		<div class="sidebar" data-color="purple" data-background-color="white">
+			<!--
+      Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
+
+      Tip 2: you can also add an image using data-image tag
+  -->
+			<div class="logo">
+				<a href="http://www.creative-tim.com" class="simple-text logo-mini">
+					CT </a> <a href="http://www.creative-tim.com"
+					class="simple-text logo-normal"> Creative Tim </a>
+			</div>
+			<div class="sidebar-wrapper">
+				<ul class="nav">
+					<li class="nav-item active  "><a class="nav-link" href="#0">
+							<i class="material-icons">dashboard</i>
+							<p>Dashboard</p>
+					</a></li>
+					<!-- your sidebar here -->
+				</ul>
+				<ul class="nav">
+					<li class="nav-item active  "><a class="nav-link" href="#0">
+							<i class="material-icons">crear_trabajador</i>
+							<p>Crear trabajador</p>
+					</a></li>
+					<!-- your sidebar here -->
+				</ul>
+				<ul class="nav">
+					<li class="nav-item active  "><a class="nav-link"
+						href="/gestionbodega/JSFs/CrearCliente.xhtml"> <i
+							class="material-icons">crear_cliente</i>
+							<p>Crear cliente</p>
+					</a></li>
+					<!-- your sidebar here -->
+				</ul>
+				<ul class="nav">
+					<li class="nav-item active  "><a class="nav-link" href="CrearBodega.xhtml">
+							<i class="material-icons">bodega</i>
+							<p>Gestion de bodega</p>
+					</a></li>
+					<!-- your sidebar here -->
+				</ul>
+			</div>
+		</div>
+		<div class="main-panel">
+			<!-- Navbar -->
+			<nav
+				class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
+			<div class="container-fluid">
+				<div class="navbar-wrapper">
+					<a class="navbar-brand" href="inicio_admin.xhtml">Panel de inicio</a>
+				</div>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					aria-controls="navigation-index" aria-expanded="false"
+					aria-label="Toggle navigation">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="navbar-toggler-icon icon-bar"></span> <span
+						class="navbar-toggler-icon icon-bar"></span> <span
+						class="navbar-toggler-icon icon-bar"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-end">
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link" href="javascript:;">
+								<i class="material-icons">notifications</i> Notifications
+						</a></li>
+						<li class="nav-item"><a class="nav-link" href="javascript:;">
+								<i class="material-icons">profile</i> Perfil
+						</a></li>
+					</ul>
+				</div>
+			</div>
+			</nav>
+			<!-- End Navbar -->
+			<div class="content">
+				<div class="container-fluid">
+					<h:form>
+						<h:panelGrid>
+							
+							<h:outputLabel value="Nombre" />
+							<h:inputText value="#{productoBean.nombre}" />
+							<h:outputLabel value="Costo" />
+							<h:inputText value="#{productoBean.costo}" />
+							<h:outputLabel value="Stock" />
+							<h:inputText value="#{productoBean.stock}" />
+
+							<h:commandButton action="#{productoBean.save(bodegaBean.bodega)}"
+								value="Guardar" />
+							<h:commandButton
+								action="#{productoBean.listar(bodegaBean.bodega.id)}"
+								value="Productos" />
+						</h:panelGrid>
+						
+					<div style="width:700px; height:200px; overflow: scroll;">
+						<h:dataTable value="#{productoBean.list}" var="p" class="table">
+							<h:column>
+								<f:facet name="header">Id</f:facet>#{p.id}</h:column>
+							<h:column>
+								<f:facet name="header">Nombre</f:facet>
+								<h:inputText value="#{p.nombre}" size="30"
+									rendered="#{p.editable}" />
+								<h:outputText value="#{p.nombre}" rendered="#{not p.editable}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Costo</f:facet>
+								<h:inputText value="#{p.costo}" size="5"
+									rendered="#{p.editable}" />
+								<h:outputText value="#{p.costo}" rendered="#{not p.editable}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Stock</f:facet>
+								<h:inputText value="#{p.stock}" size="5"
+									rendered="#{p.editable}" />
+								<h:outputText value="#{p.stock}" rendered="#{not p.editable}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Accion</f:facet>
+								<h:commandLink value="Editar" action="#{productoBean.edit(p)}"
+									rendered="#{not c.editable}" />
+								<h:commandLink value="Actualizar"
+									action="#{productoBean.update(p)}" rendered="#{p.editable}" />
+								<h:commandLink value="Eliminar"
+									action="#{productoBean.delete(p)}" style="color: red;margin-left: 30px;" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Bodega</f:facet>
+								<f:selectItems value="#{bodegaBean.list}" var="d">
+									<h:outputLabel value="#{d.nombre}" />
+								</f:selectItems>
+							</h:column>
+						</h:dataTable>
+					</div>
+					</h:form>
+				</div>
+				<div>
+					<h4>Lista de bodegas</h4>
+				</div>
+				<div class="content" style="width:600px; height:200px; overflow: scroll;">
+					<h:form>
+
+						<h:dataTable value="#{bodegaBean.list}" var="b" class="table"
+							headerClass="cabeceraTabla" rowClasses="filaPar,filaImpar">
+							<h:column>
+								<f:facet name="header">Id</f:facet>#{b.id}</h:column>
+							<h:column>
+								<f:facet name="header">Nombre</f:facet>
+								<h:inputText value="#{b.nombre}" size="10"
+									rendered="#{b.editable}" />
+								<h:outputText value="#{b.nombre}" rendered="#{not b.editable}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Eliminar la bodega</f:facet>
+								<h:commandLink value="Eliminar" action="#{bodegaBean.delete(b)}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Editar la bodega</f:facet>
+								<h:commandLink value="Editar" action="#{bodegaBean.edit(b)}"
+									rendered="#{not b.editable}" />
+								<h:commandLink value="Cancelar"
+									action="#{bodegaBean.cancelar(b)}" rendered="#{b.editable}" />
+								<h:commandLink value="Actualizar"
+									action="#{bodegaBean.update(b)}" rendered="#{b.editable}" />
+							</h:column>
+							<h:column>
+								<f:facet name="header">Entrar a bodega</f:facet>
+								<h:commandLink action="#{bodegaBean.vistaProducto(b)}"
+									value="Ir a bodega" />
+							</h:column>
+							<h:column>
+							<f:facet name="header"></f:facet>
+								<h:commandLink action="#{productoBean.addProductsToBodeg(b)}" value="Agregar productos seleccionados" style="color: green;" />
+							</h:column>
+						</h:dataTable>
+					</h:form>
+				</div>
+			</div>
+			<footer class="footer">
+			<div class="container-fluid">
+				<nav class="float-left">
+				<ul>
+					<li>
+					
+					</li>
+				</ul>
+				</nav>
+				<div class="copyright float-right">
+					&copy;
+					<script>
+              document.write(new Date().getFullYear())
+            </script>
+					Angel Jadan
+				</div>
+				<!-- your footer here -->
+			</div>
+			</footer>
+		</div>
+	</div>
+</body>
+</html>
