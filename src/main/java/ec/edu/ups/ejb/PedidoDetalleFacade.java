@@ -1,25 +1,22 @@
 package ec.edu.ups.ejb;
 
-
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import ec.edu.ups.entidades.Bodega;
+import ec.edu.ups.entidades.PedidoDetalle;
 
 @Stateless
-public class BodegaFacade extends AbstractFacade<Bodega> {
-
-    @PersistenceContext(unitName = "Ejemplo.EJB.JSF.JPA")
+public class PedidoDetalleFacade extends AbstractFacade<PedidoDetalle>{
+	@PersistenceContext(unitName = "Ejemplo.EJB.JSF.JPA")
     private EntityManager em;
 
-    public BodegaFacade() {
-        super(Bodega.class);
+    public PedidoDetalleFacade() {
+        super(PedidoDetalle.class);
     }
     
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
 }
