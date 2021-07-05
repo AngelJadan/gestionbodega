@@ -9,7 +9,7 @@ import ec.edu.ups.entidad.Detalle;
 @Stateless
 public class DetalleFacade extends AbstractFacade<Detalle>{
 
-	@PersistenceContext(unitName = "gestionbodegaPersistenceUnit")
+	@PersistenceContext(unitName = "Ejemplo.EJB.JSF.JPA")
 	private EntityManager em;
 	
 	public DetalleFacade() {

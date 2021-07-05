@@ -52,7 +52,7 @@ public class LoginUsuarioController extends HttpServlet {
 		System.out.println("Consulta. " + request);
 		if (request.getParameter("logout") != null) {
 			session.invalidate();
-			response.sendRedirect("/gestionbodega/HTMLs/login.html");
+			response.sendRedirect("/Ejemplo.EJB.JSF.JPA/HTMLs/login.html");
 		}
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}

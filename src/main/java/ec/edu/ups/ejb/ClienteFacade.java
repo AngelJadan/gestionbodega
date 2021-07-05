@@ -10,7 +10,7 @@ import ec.edu.ups.entidad.Cliente;
 @Stateless
 public class ClienteFacade extends AbstractFacade<Cliente>{
 
-	@PersistenceContext(unitName = "gestionbodegaPersistenceUnit")
+	@PersistenceContext(unitName = "Ejemplo.EJB.JSF.JPA")
 //	@Inject
 	private EntityManager em;
 	
