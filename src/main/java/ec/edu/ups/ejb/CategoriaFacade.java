@@ -12,7 +12,7 @@ import ec.edu.ups.entidades.Producto;
 @Stateless
 public class CategoriaFacade extends AbstractFacade<Categoria> {
 
-	@PersistenceContext(unitName = "Ejemplo.EJB.JSF.JPA")
+	@PersistenceContext(unitName = "Practica-de-laboratorio-03-EJB-JSF-y-JPA")
 	private EntityManager em;
 
 	public CategoriaFacade() {

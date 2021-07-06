@@ -1,7 +1,380 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
-	version="2.3">
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_3.xsd"
+    version="2.3">
+    
+    <navigation-rule> 
+	   <from-view-id>/Empleado/PrincipalEmpleadoJSF.xhtml</from-view-id> 
+	   <navigation-case> 
+	      <from-outcome>crearFactura</from-outcome> 
+	      <to-view-id>/Empleado/CrearFactura.xhtml</to-view-id> 
+	   </navigation-case> 
+	   <navigation-case> 
+	      <from-outcome>listarFactura</from-outcome> 
+	      <to-view-id>/Empleado/ListarFacturas.xhtml</to-view-id> 
+	   </navigation-case> 
+	   <navigation-case> 
+	      <from-outcome>crearCliente</from-outcome> 
+	      <to-view-id>/Empleado/CrearUsuario.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case> 
+	      <from-outcome>listarClientes</from-outcome> 
+	      <to-view-id>/Empleado/ListarClientes.xhtml</to-view-id> 
+	   </navigation-case>  
+	   <navigation-case>
+			<from-outcome>salir</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GestionarPedidos</from-outcome>
+			<to-view-id>/Empleado/ListarPedidos.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule> 
+	
+	<navigation-rule> 
+	   <from-view-id>/Empleado/CrearFactura.xhtml</from-view-id> 
+	   <navigation-case> 
+	      <from-outcome>listarFactura</from-outcome> 
+	      <to-view-id>/Empleado/ListarFacturas.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case> 
+	      <from-outcome>crearCliente</from-outcome> 
+	      <to-view-id>/Empleado/CrearUsuario.xhtml</to-view-id> 
+	   </navigation-case> 
+	   <navigation-case> 
+	      <from-outcome>listarClientes</from-outcome> 
+	      <to-view-id>/Empleado/ListarClientes.xhtml</to-view-id> 
+	   </navigation-case>  
+	   <navigation-case>
+			<from-outcome>salir</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GestionarPedidos</from-outcome>
+			<to-view-id>/Empleado/ListarPedidos.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule> 
+	
+	<navigation-rule> 
+	   <from-view-id>/Empleado/ListarFacturas.xhtml</from-view-id> 
+	   <navigation-case> 
+	      <from-outcome>crearFactura</from-outcome> 
+	      <to-view-id>/Empleado/CrearFactura.xhtml</to-view-id> 
+	   </navigation-case> 
+	   <navigation-case> 
+	      <from-outcome>crearCliente</from-outcome> 
+	      <to-view-id>/Empleado/CrearUsuario.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case> 
+	      <from-outcome>listarClientes</from-outcome> 
+	      <to-view-id>/Empleado/ListarClientes.xhtml</to-view-id> 
+	   </navigation-case>  
+	   <navigation-case>
+			<from-outcome>salir</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GestionarPedidos</from-outcome>
+			<to-view-id>/Empleado/ListarPedidos.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule> 
+	
+	<navigation-rule> 
+	   <from-view-id>/Empleado/CrearUsuario.xhtml</from-view-id> 
+	   <navigation-case> 
+	      <from-outcome>crearFactura</from-outcome> 
+	      <to-view-id>/Empleado/CrearFactura.xhtml</to-view-id> 
+	   </navigation-case> 
+	   <navigation-case> 
+	      <from-outcome>listarFactura</from-outcome> 
+	      <to-view-id>/Empleado/ListarFacturas.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case> 
+	      <from-outcome>listarClientes</from-outcome> 
+	      <to-view-id>/Empleado/ListarClientes.xhtml</to-view-id> 
+	   </navigation-case>  
+	   <navigation-case>
+			<from-outcome>salir</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GestionarPedidos</from-outcome>
+			<to-view-id>/Empleado/ListarPedidos.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule> 
+	
+	<navigation-rule> 
+	   <from-view-id>/Empleado/ListarClientes.xhtml</from-view-id> 
+	   <navigation-case> 
+	      <from-outcome>crearFactura</from-outcome> 
+	      <to-view-id>/Empleado/CrearFactura.xhtml</to-view-id> 
+	   </navigation-case> 
+	   <navigation-case> 
+	      <from-outcome>listarFactura</from-outcome> 
+	      <to-view-id>/Empleado/ListarFacturas.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case> 
+	      <from-outcome>crearCliente</from-outcome> 
+	      <to-view-id>/Empleado/CrearUsuario.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case>
+			<from-outcome>salir</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>GestionarPedidos</from-outcome>
+			<to-view-id>/Empleado/ListarPedidos.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<navigation-rule> 
+	   <from-view-id>/Empleado/ListarPedidos.xhtml</from-view-id> 
+	   <navigation-case> 
+	      <from-outcome>crearFactura</from-outcome> 
+	      <to-view-id>/Empleado/CrearFactura.xhtml</to-view-id> 
+	   </navigation-case> 
+	   <navigation-case> 
+	      <from-outcome>listarFactura</from-outcome> 
+	      <to-view-id>/Empleado/ListarFacturas.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case> 
+	      <from-outcome>crearCliente</from-outcome> 
+	      <to-view-id>/Empleado/CrearUsuario.xhtml</to-view-id> 
+	   </navigation-case>
+	   <navigation-case>
+			<from-outcome>salir</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case> 
+	      <from-outcome>listarClientes</from-outcome> 
+	      <to-view-id>/Empleado/ListarClientes.xhtml</to-view-id> 
+	   </navigation-case>  
+	</navigation-rule>
+	
+	<navigation-rule>
+	
+		<from-view-id>/menupricp.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>bodega1</from-outcome>
+			<to-view-id>/menuBodega1.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega2</from-outcome>
+			<to-view-id>/menuBodega2.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega3</from-outcome>
+			<to-view-id>/menuBodega3.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>inicioAdmin</from-outcome>
+			<to-view-id>/Administrador/InformeGeneral.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>inicioUsuario</from-outcome>
+			<to-view-id>/Empleado/PrincipalEmpleadoJSF.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>crearusu</from-outcome>
+			<to-view-id>/CreacionUsuario.xhtml</to-view-id>
+		</navigation-case>
+		
+		
+	</navigation-rule>
+	
+	<navigation-rule>
+	
+		<from-view-id>/menuBodega1.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>menuPrincial</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega2</from-outcome>
+			<to-view-id>/menuBodega2.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega3</from-outcome>
+			<to-view-id>/menuBodega3.xhtml</to-view-id>
+		</navigation-case>
+		
+		
+		<navigation-case>
+			<from-outcome>inicioAdmin</from-outcome>
+			<to-view-id>/Administrador/InformeGeneral.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>inicioUsuario</from-outcome>
+			<to-view-id>/Empleado/PrincipalEmpleadoJSF.xhtml</to-view-id>
+		</navigation-case>
+		
+		
+		<navigation-case>
+			<from-outcome>crearusu</from-outcome>
+			<to-view-id>/CreacionUsuario.xhtml</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+	
+	<navigation-rule>
+	
+		<from-view-id>/menuBodega2.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>menuPrincial</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega1</from-outcome>
+			<to-view-id>/menuBodega1.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega3</from-outcome>
+			<to-view-id>/menuBodega3.xhtml</to-view-id>
+		</navigation-case>
+		
+		
+		<navigation-case>
+			<from-outcome>inicioAdmin</from-outcome>
+			<to-view-id>/Administrador/InformeGeneral.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>inicioUsuario</from-outcome>
+			<to-view-id>/Empleado/PrincipalEmpleadoJSF.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>crearusu</from-outcome>
+			<to-view-id>/CreacionUsuario.xhtml</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+	
+	<navigation-rule>
+	
+		<from-view-id>/menuBodega3.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>menuPrincial</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega1</from-outcome>
+			<to-view-id>/menuBodega1.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega2</from-outcome>
+			<to-view-id>/menuBodega2.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega3</from-outcome>
+			<to-view-id>/menuBodega3.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>inicioAdmin</from-outcome>
+			<to-view-id>/Administrador/InformeGeneral.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>inicioUsuario</from-outcome>
+			<to-view-id>/Empleado/PrincipalEmpleadoJSF.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>crearusu</from-outcome>
+			<to-view-id>/CreacionUsuario.xhtml</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+	
+		<from-view-id>/CreacionUsuario.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>menuPrincial</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega1</from-outcome>
+			<to-view-id>/menuBodega1.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>bodega2</from-outcome>
+			<to-view-id>/menuBodega2.xhtml</to-view-id>
+		</navigation-case>
+		
+		
+		<navigation-case>
+			<from-outcome>inicioAdmin</from-outcome>
+			<to-view-id>/Administrador/InformeGeneral.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>inicioUsuario</from-outcome>
+			<to-view-id>/Empleado/PrincipalEmpleadoJSF.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>crearusu</from-outcome>
+			<to-view-id>/CreacionUsuario.xhtml</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+	
+	
+	<navigation-rule>
+	
+		<from-view-id>/Administrador/InformeGeneral.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>gestionGodegas</from-outcome>
+			<to-view-id>/Administrador/GestionarBodegas.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>salir</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
+	
+	<navigation-rule>
+	
+		<from-view-id>/Administrador/GestionarBodegas.xhtml</from-view-id>
+		
+		<navigation-case>
+			<from-outcome>informeGeneral</from-outcome>
+			<to-view-id>/Administrador/InformeGeneral.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>salir</from-outcome>
+			<to-view-id>/menupricp.xhtml</to-view-id>
+		</navigation-case>
+		
+	</navigation-rule>
 
 </faces-config>

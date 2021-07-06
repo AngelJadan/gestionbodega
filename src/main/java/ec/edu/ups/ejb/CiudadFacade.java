@@ -10,7 +10,7 @@ import ec.edu.ups.entidades.Ciudad;
 @Stateless
 public class CiudadFacade extends AbstractFacade<Ciudad> {
 
-    @PersistenceContext(unitName = "Ejemplo.EJB.JSF.JPA")
+    @PersistenceContext(unitName = "Practica-de-laboratorio-03-EJB-JSF-y-JPA")
     private EntityManager em;
 
     public CiudadFacade() {

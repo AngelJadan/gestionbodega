@@ -13,7 +13,7 @@ import ec.edu.ups.entidades.Producto;
 @Stateless
 public class PersonaFacade extends AbstractFacade<Persona> {
 
-	@PersistenceContext(unitName = "Ejemplo.EJB.JSF.JPA")
+	@PersistenceContext(unitName = "Practica-de-laboratorio-03-EJB-JSF-y-JPA")
 	private EntityManager em;
 
 	public PersonaFacade() {
@@ -61,13 +61,12 @@ public class PersonaFacade extends AbstractFacade<Persona> {
 		return persona;
 	}
 
-	public Persona verificarUsuario(String correo, String contrasena) {
+	public Persona verificarUsuario(String correo) {
 		try {
 			System.out.println("It is what it is");
-			System.out.println("Correo: " + correo + " ,Contrasena: " + contrasena);
+			//System.out.println("Correo: " + correo + " ,Contrasena: " + contrasena);
 
-			String jpql = "SELECT per FROM Persona per WHERE per.correo ='" + correo + "' AND per.contrasena='"
-					+ contrasena + "' AND per.estado != 'D'";
+			String jpql = "SELECT per FROM Persona per WHERE per.correo ='" + correo + "'";
 			Persona per = (Persona) em.createQuery(jpql).getSingleResult();
 
 			System.out.println("Yeah boooy");
@@ -81,11 +80,11 @@ public class PersonaFacade extends AbstractFacade<Persona> {
 
 	public Persona buscarCliente(String cedula) {
 		try {
-			String jpql = "SELECT per FROM Persona per WHERE per.cedula='" + cedula
-					+ "' AND per.estado != 'D' AND per.rol='C'";
+			String jpql = "SELECT per FROM Persona per WHERE per.cedula='" +cedula +"'";
 			Persona per = (Persona) em.createQuery(jpql).getSingleResult();
 			return per;
 		} catch (Exception e) {
+			System.out.println(e.getMessage());
 			return null;
 		}
 	}

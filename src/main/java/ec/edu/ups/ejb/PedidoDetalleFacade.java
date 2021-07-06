@@ -8,7 +8,7 @@ import ec.edu.ups.entidades.PedidoDetalle;
 
 @Stateless
 public class PedidoDetalleFacade extends AbstractFacade<PedidoDetalle>{
-	@PersistenceContext(unitName = "Ejemplo.EJB.JSF.JPA")
+	@PersistenceContext(unitName = "Practica-de-laboratorio-03-EJB-JSF-y-JPA")
     private EntityManager em;
 
     public PedidoDetalleFacade() {

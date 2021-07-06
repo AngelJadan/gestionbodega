@@ -218,10 +218,14 @@ public class CategoriaBean implements Serializable {
 	
 
 	public String iniciarSecion() {
+		
 		System.out.println("Usuario: " + usuario );
+		
 		System.out.println("Contrasena: " + contrasena );
+		
 		Persona sta = ejbPersona.inicioSesion(usuario, contrasena);
 		LoguinBean loguinBean=new LoguinBean();
+		
 		if (sta != null && sta.getRol() == 'A') {
 			loguinBean.login();
 			return "inicioAdmin";
@@ -229,7 +233,10 @@ public class CategoriaBean implements Serializable {
 			loguinBean.login();
 			return "inicioUsuario";
 		}
-		return null;	
+		
+		return null;
+		
+		
 	}
 
 	public String getUsuario() {

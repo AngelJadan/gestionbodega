@@ -1,10 +1,12 @@
 package ec.edu.ups.entidades;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.*;
@@ -22,6 +24,7 @@ public class PedidoCabecera implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	@JsonbDateFormat(value = "dd-MM-YYYY hh:mm:ss")
 	private Date fecha;
 	private float subtotal;
 	private float total;
@@ -34,7 +37,7 @@ public class PedidoCabecera implements Serializable {
 	private String estadoSiguiente;
 
 	@Transient
-	@JsonbProperty(nillable = true)
+	@JsonbTransient
 	private Map<String, Integer> productos;
 
 	@Transient
@@ -47,28 +50,27 @@ public class PedidoCabecera implements Serializable {
 	private Persona persona;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "pedidoCabecera")
-	@JsonbTransient
 	private List<PedidoDetalle> pedidosDetale;
 
 	@Override
 	public String toString() {
 		return "PedidoCabecera [id=" + id + ", fecha=" + fecha + ", subtotal=" + subtotal + ", total=" + total
-				+ ", iva=" + iva + ", estado=" + estado + ", persona=" + persona + ", pedidosDetale=" + pedidosDetale
+				+ ", iva=" + iva + ", estado=" + estado + ", pedidosDetale=" + pedidosDetale
 				+ "]";
 	}
 	
-	public PedidoCabecera(int id, String estadoActual, String estadoSiguiente, Persona persona) {
+	public PedidoCabecera(int id, String estadoActual, String estadoSiguiente   ) {
 		this.setId(id);
 		this.setEstadoActual(estadoActual);
 		this.setEstadoSiguiente(estadoSiguiente);
-		this.setPersona(persona);
+		
 	}
 
 	public PedidoCabecera() {
-		super();
+     fecha= Date.from(Instant.now());
 	}
 
-	public PedidoCabecera(int id, Date fecha, float subtotal, float total, float iva, String estado, Persona persona) {
+	public PedidoCabecera(int id, Date fecha, float subtotal, float total, float iva, String estado , Persona persona) {
 		this.setId(id);
 		this.setFecha(fecha);
 		this.setSubtotal(subtotal);
@@ -77,7 +79,7 @@ public class PedidoCabecera implements Serializable {
 		this.setTotal(total);
 		this.setIva(iva);
 		this.setEstado(estado);
-		this.setPersona(persona);
+		
 	}
 
 	public int getId() {
@@ -128,13 +130,7 @@ public class PedidoCabecera implements Serializable {
 		this.estado = estado;
 	}
 
-	public Persona getPersona() {
-		return persona;
-	}
 
-	public void setPersona(Persona persona) {
-		this.persona = persona;
-	}
 
 	public List<PedidoDetalle> getPedidosDetale() {
 		return pedidosDetale;
@@ -179,5 +175,14 @@ public class PedidoCabecera implements Serializable {
 	public void setCedula(String cedula) {
 		this.cedula = cedula;
 	}
+
+	public Persona getPersona() {
+		return persona;
+	}
+
+	public void setPersona(Persona persona) {
+		this.persona = persona;
+	}
+	
 
 }

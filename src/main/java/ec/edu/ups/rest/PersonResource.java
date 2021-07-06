@@ -36,21 +36,27 @@ public class PersonResource {
 	private Persona persona;
 	
 	
-	@POST
-    @Path("/login")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@GET
+    @Path("/login/{correo}/{contrasena}")
+  //  @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response login(@FormParam("correo") String correo, @FormParam("contraseña") String contrasena) throws IOException {
+    public Response login(@PathParam("correo") String correo, @PathParam("contrasena") String contrasena) throws IOException {
 		persona = new Persona();
-		persona = personaFacade.verificarUsuario(correo, contrasena);
+		persona = personaFacade.verificarUsuario(correo);
 		
 		if(persona != null) {
-			System.out.println("usuario encontrado");
+			
+			if (persona.getPassword().equals(contrasena) && persona.isEstado()) {
+				System.out.println("usuario encontrado");
 			return Response.ok("Inicio de Sesion Correcto").build();
-			
+			}else {
+				System.out.println("usuario  encontrado");
+				return Response.ok("contrasena incorrecto").build();
+			}
+	
+
 		}else {
-			return Response.status(404).entity("Usuario no encontrado").build();
-			
+			return Response.status(404).entity("Usuario no encontrado").build();	
 		}
 		
     }
@@ -60,14 +66,15 @@ public class PersonResource {
     @Path("/registrar/")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response register(@FormParam("cedula") String cedula, @FormParam("correo") String correo, @FormParam("contraseña") String contrasena){
+    public Response register(@FormParam("cedula") String cedula, @FormParam("correo") String correo, @FormParam("contraseï¿½a") String contrasena){
 		persona = new Persona();
         persona = personaFacade.buscarCliente(cedula);
         
         if(persona != null){
             persona.setCorreo(correo);
             persona.setPassword(contrasena);
-            persona.setEstado('H');
+            persona.setEstado(true);
+           
             try{
                 personaFacade.edit(persona);
                 return Response.ok("Usuario Registrado").build();
@@ -87,7 +94,7 @@ public class PersonResource {
     @Produces(MediaType.TEXT_PLAIN)
     public Response update(@FormParam("cedula") String cedula, @FormParam("nombre") String nombre,
                            @FormParam("apellido") String apellido, @FormParam("direccion") String direccion, @FormParam("telefono") String telefono,
-                           @FormParam("correo") String correo, @FormParam("contraseña") String contrasena){
+                           @FormParam("correo") String correo, @FormParam("contrasena") String contrasena){
 
 		persona = new Persona();
         persona = personaFacade.buscarCliente(cedula);
@@ -117,21 +124,19 @@ public class PersonResource {
 	
 	
 	
-	@PUT
-    @Path("/anular/")
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@DELETE
+    @Path("/anular/{cedula}")
+   // @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.TEXT_PLAIN)
-    public Response anular(@FormParam("cedula") String cedula){
+    public Response anular(@PathParam("cedula") String cedula){
 		
 		persona = new Persona();
         persona = personaFacade.buscarCliente(cedula);
         
         if(persona != null){
             try{
-            	Persona per = new Persona();
-            	per = personaFacade.buscarCliente(cedula);
-            	per.setEstado('D');
-                personaFacade.edit(per);
+            	persona.setEstado(false);
+                personaFacade.edit(persona);
                 return Response.ok("Usuario Anulado").build();
                 
             }catch (Exception e){
@@ -159,7 +164,7 @@ public class PersonResource {
     	
     	System.out.println("ver id + " + id);
 	Jsonb jsonb = JsonbBuilder.create();
-	Persona person = new Persona(id, "Juan", "Cordova", "098654654", "Av Loja", "0980644260", "juan@gmail.com", "123456", 'A', 'B');
+	Persona person = new Persona(id, "Juan", "Cordova", "098654654", "Av Loja", "0980644260", "juan@gmail.com", "123456", 'A', true);
 	return Response.ok(jsonb.toJson(person)).build();
     }
 

@@ -12,7 +12,7 @@ import ec.edu.ups.entidades.PedidoCabecera;
 
 @Stateless
 public class PedidoCabeceraFacade extends AbstractFacade<PedidoCabecera> {
-	@PersistenceContext(unitName = "Ejemplo.EJB.JSF.JPA")
+	@PersistenceContext(unitName = "Practica-de-laboratorio-03-EJB-JSF-y-JPA")
 	private EntityManager em;
 
 	public PedidoCabeceraFacade() {
@@ -30,7 +30,7 @@ public class PedidoCabeceraFacade extends AbstractFacade<PedidoCabecera> {
 		try {
 			cabeceras = em.createQuery(consulta).getResultList();
 		} catch (Exception e) {
-			System.out.println(">>>Warning (PersonaFacade:buscarPorCedula: )" + e.getMessage());
+			System.out.println(" (PersonaFacade:buscarPorCedula: )" + e.getMessage());
 		}
 		return cabeceras;
 	}

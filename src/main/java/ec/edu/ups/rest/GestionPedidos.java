@@ -25,9 +25,13 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+
 import javax.ejb.EJB;
 
+import ec.edu.ups.entidades.Bodega;
 import ec.edu.ups.entidades.Categoria;
+import ec.edu.ups.entidades.FacturaCabecera;
+import ec.edu.ups.entidades.FacturaDetalle;
 import ec.edu.ups.entidades.PedidoCabecera;
 import ec.edu.ups.entidades.PedidoDetalle;
 import ec.edu.ups.entidades.Persona;
@@ -38,6 +42,7 @@ import ec.edu.ups.ejb.CiudadFacade;
 import ec.edu.ups.ejb.FacturaCabeceraFacade;
 import ec.edu.ups.ejb.FacturaDetalleFacade;
 import ec.edu.ups.ejb.PedidoCabeceraFacade;
+import ec.edu.ups.ejb.PedidoDetalleFacade;
 import ec.edu.ups.ejb.PersonaFacade;
 import ec.edu.ups.ejb.ProductoFacade;
 import ec.edu.ups.ejb.ProvinciaFacade;
@@ -73,13 +78,23 @@ public class GestionPedidos {
 	PedidoCabeceraFacade pedidoCabeceraFacade;
 	
 	private PedidoCabecera pedidoCabecera;
-	
+	@EJB
+	PedidoDetalleFacade pedidoDetalleFacade;
 	@GET
     @Path("/productos/{bodega}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response listarProductos(@PathParam("bodega") String bodega) {
+    public Response listarProductos(@PathParam("bodega") int bodega) {
         System.out.println(bodega);
         try {
+        	Bodega bog= bodegaFacade.find(bodega);
+        	for (int i=0; i<bog.getProductos().size(); i++) {
+        		Producto pro =bog.getProductos().get(i);
+        		if (pro.getCategoria().equals(bog)) {
+        			
+					
+				}
+				
+			}
             List<Categoria> cat = categoriaFacade.categoriasOrdenadas();
             List<Producto> pro = new ArrayList<Producto>();
 
@@ -112,6 +127,8 @@ public class GestionPedidos {
 	
 	}
 	
+	
+
 	
 	
 	@GET
@@ -156,45 +173,113 @@ public class GestionPedidos {
 	
 	
 	@PUT
-    @Path("/pedir")
+    @Path("/distribuidor")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response pedir(String jsonPedido){
+		
+		
         try {
             Jsonb jsonb = JsonbBuilder.create();
             PedidoCabecera pc = jsonb.fromJson(jsonPedido, PedidoCabecera.class);
-            List<PedidoDetalle> pd = new ArrayList<PedidoDetalle>();
-            Iterator it = pc.getProductos().keySet().iterator();
-            Persona persona = personaFacade.buscarCliente(pc.getCedula());
-            if(persona==null) {
-                return Response.status(404).entity("No se encontro una persona con esta cedula: " + pc.getCedula()).build();
-            }
-            pc.setEstadoSiguiente("Receptado");
-            pc.setPersona(persona);
-            while(it.hasNext()) {
-                String nombre = (String) it.next();
-                int cantidad = pc.getProductos().get(nombre);
-                List<Producto> prods = productoFacade.buscarProductoPorNombre(nombre);
-                if(prods.size()!=0) {
-                    PedidoDetalle detalle = new PedidoDetalle(0, cantidad, prods.get(0), pc);
-                    pd.add(detalle);
-                }else {
-                    return Response.status(404).entity("El producto " + nombre + " no se encuentra en nuestra base de datos").build();
-                }
+             Persona per= personaFacade.buscarCliente(pc.getCedula());
+            if (per  != null) {
+ 	
+            	pc.setPersona(per);
+            
+				     pedidoCabeceraFacade.create(pc);
+				     for (int i = 0; i < pc.getPedidosDetale().size(); i++) {
+				    	 PedidoDetalle pdet= pc.getPedidosDetale().get(i);
+				    	 pdet.setPedidoCabecera(pc);
+				    	 pedidoDetalleFacade.edit(pdet);
+					}
+				     return Response.status(200).entity("Se ha registrado el pedido").build();
+			}else {
+				 return Response.status(404).entity("No se pudo encontrar  el cliente").build();
+			}
+ 
 
-            }
-            pc.setPedidosDetale(pd);
-            pedidoCabeceraFacade.create(pc);
-            return Response.status(404).entity("Se ha registrado el pedido").build();
         } catch (Exception e) {
-            return Response.status(404).entity("No se pudo encontrar un producto").build();
+            return Response.status(404).entity("No se pudo encontrar un producto"+e.getMessage()).build();
         }
     }
 	
 	
+	@PUT
+    @Path("/Factura")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response Facpedir(String jsonPedido){
+		
+		
+        try {
+            Jsonb jsonb = JsonbBuilder.create();
+            PedidoCabecera pc = jsonb.fromJson(jsonPedido, PedidoCabecera.class);
+             Persona per= personaFacade.buscarCliente(pc.getCedula());
+            if (per  != null) {
+ 	
+            	pc.setPersona(per);
+            
+				     pedidoCabeceraFacade.create(pc);
+				     FacturaCabecera fca= new FacturaCabecera();
+				     fca.setFecha(pc.getFecha());
+				     fca.setPersona(per);
+				     fca.setSubtotal(pc.getSubtotal());
+				     fca.setIva(pc.getIva());
+				     fca.setTotal(pc.getTotal());
+				     List<FacturaDetalle> deta=new ArrayList<FacturaDetalle>();
+				     for (int i = 0; i < pc.getPedidosDetale().size(); i++) {
+				    	 PedidoDetalle pdet= pc.getPedidosDetale().get(i);
+				    	 pdet.setPedidoCabecera(pc);
+				    	 pedidoDetalleFacade.edit(pdet);
+				    	 
+				    	 FacturaDetalle fdet= new FacturaDetalle();
+				    	 fdet.setCantidad(pdet.getCantidad());
+				    	 fdet.setProducto(pdet.getProducto());
+				    	 fdet.setTotal(pdet.getTotal());
+				    	 fdet.setFacturaCabecera(fca);
+				    	 deta.add(fdet);
+				    	 
+					}
+				     fca.setFacturasDetalle(deta);
+				     cabeceraFacade.create(fca);
+				     return Response.status(200).entity("Se ha registrado el pedido").build();
+			}else {
+				 return Response.status(404).entity("No se pudo encontrar  el cliente").build();
+			}
+ 
+
+        } catch (Exception e) {
+            return Response.status(404).entity("No se pudo encontrar un producto"+e.getMessage()).build();
+        }
+    }
 	
 	
+	@GET
+	@Path("/estados/{cedula}")
+//	@Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response postEstados(@PathParam("cedula") String cedula) throws IOException{
+		 Persona p =personaFacade.buscarPorCedula(cedula);
+		 try {
+			
+		 if (p!=null) {
+			 List<String>lista= new ArrayList<String>();
+			 for (int i = 0; i < p.getPedidosCab().size(); i++) {
+				 lista.add(p.getPedidosCab().get(i).getEstado());
+				
+			}
+			 Jsonb buil=JsonbBuilder.create();
+			 return Response.ok().entity(buil.toJson(lista)).build();
+			 
+		}else {
+			System.out.println("No se encuentra el cliente");
+		return Response.ok().build();	
+		
+		}
+		 
+		
+	} catch (Exception e) {
+		return Response.ok().entity(e.getMessage()).build();
+	}
 	
-	
-	
-	
+	}
 }

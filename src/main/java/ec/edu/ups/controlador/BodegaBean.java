@@ -248,9 +248,7 @@ public class BodegaBean implements Serializable{
 	
 	
 	
-	
-	
-	
+
 
 	public String getText() {
 		return text;

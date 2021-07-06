@@ -139,7 +139,10 @@ public class PersonaBean implements Serializable{
 	public static void setPersona(Persona persona) {
 		PersonaBean.persona = persona;
 	}
+
 	
+	
+
 	public PersonaFacade getEjbPersonaFacade() {
 		return ejbPersonaFacade;
 	}
