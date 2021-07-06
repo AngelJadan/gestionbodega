@@ -5,21 +5,21 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import ec.edu.ups.entidades.Bodega;
+import ec.edu.ups.entidades.Ciudad;
 
 @Stateless
-public class BodegaFacade extends AbstractFacade<Bodega> {
+public class CiudadFacade extends AbstractFacade<Ciudad> {
 
     @PersistenceContext(unitName = "Practica-de-laboratorio-03-EJB-JSF-y-JPA")
     private EntityManager em;
 
-    public BodegaFacade() {
-        super(Bodega.class);
+    public CiudadFacade() {
+        super(Ciudad.class);
     }
     
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-    
 }
+
