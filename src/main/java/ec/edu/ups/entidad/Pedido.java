@@ -7,7 +7,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,61 +15,64 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
-@Table(name = "Facturas")
-public class Factura implements Serializable {
+@Table(name = "Pedidos")
+public class Pedido implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name = "fac_id_seq", sequenceName = "fac_id_seq", allocationSize = 1)
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "fac_id_seq")
-	@Column(name = "fac_id", updatable = false, nullable = false, unique = true)
+	@SequenceGenerator(name = "ped_id_seq", sequenceName = "ped_id_seq", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ped_id_seq")
+	@Column(name="ped_id",updatable = false, nullable = false, unique = true)
 	private int id;
-
-	@Column(name = "fac_fecha")
+	
+	@Column(name = "ped_fecha", nullable = false, length = 10)
 	private Date fecha;
 	
-	@Column(name="fac_total")
-	private double total;
+	@Column(name = "ped_estado", nullable = false, length = 10)
+	private String estado;
 	
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinColumn(name = "fac_cliente")
+	@ManyToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "ped_cliente")
 	private Cliente cliente;
-
-	@ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinColumn(name = "fac_pedido")
-	private Pedido pedido;
 	
-	@Transient
-	private boolean editable;
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ped_detalle")
+	private List<Detalle> detalle;
+	
+	@Column(name = "ped_total", nullable = false)
+	private double total;
 
-	public Factura() {
+	public Pedido() {
 		// TODO Auto-generated constructor stub
 	}
-
-	public Factura(Date fecha,double total, Pedido pedido) {
+	public Pedido(Date fecha, String estado, Cliente cliente, List<Detalle> detalle, double total) {
+		
 		this.fecha = fecha;
-		this.total = total;
-		this.pedido = pedido;
+		this.estado = estado;
+		this.cliente = cliente;
+		this.detalle = detalle;
+		this.total = total; 
 	}
 	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
-		result = prime * result + (editable ? 1231 : 1237);
+		result = prime * result + ((detalle == null) ? 0 : detalle.hashCode());
+		result = prime * result + ((estado == null) ? 0 : estado.hashCode());
 		result = prime * result + ((fecha == null) ? 0 : fecha.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(total);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -79,13 +81,21 @@ public class Factura implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Factura other = (Factura) obj;
+		Pedido other = (Pedido) obj;
 		if (cliente == null) {
 			if (other.cliente != null)
 				return false;
 		} else if (!cliente.equals(other.cliente))
 			return false;
-		if (editable != other.editable)
+		if (detalle == null) {
+			if (other.detalle != null)
+				return false;
+		} else if (!detalle.equals(other.detalle))
+			return false;
+		if (estado == null) {
+			if (other.estado != null)
+				return false;
+		} else if (!estado.equals(other.estado))
 			return false;
 		if (fecha == null) {
 			if (other.fecha != null)
@@ -94,16 +104,19 @@ public class Factura implements Serializable {
 			return false;
 		if (id != other.id)
 			return false;
-		if (pedido == null) {
-			if (other.pedido != null)
-				return false;
-		} else if (!pedido.equals(other.pedido))
-			return false;
 		if (Double.doubleToLongBits(total) != Double.doubleToLongBits(other.total))
 			return false;
 		return true;
 	}
-
+	public double getTotal() {
+		return total;
+	}
+	public void setTotal(double total) {
+		this.total = total;
+	}
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 	public int getId() {
 		return id;
 	}
@@ -120,20 +133,12 @@ public class Factura implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public boolean isEditable() {
-		return editable;
+	public String getEstado() {
+		return estado;
 	}
 
-	public void setEditable(boolean editable) {
-		this.editable = editable;
-	}
-
-	public double getTotal() {
-		return total;
-	}
-
-	public void setTotal(double total) {
-		this.total = total;
+	public void setEstado(String estado) {
+		this.estado = estado;
 	}
 
 	public Cliente getCliente() {
@@ -144,17 +149,17 @@ public class Factura implements Serializable {
 		this.cliente = cliente;
 	}
 
-	public Pedido getPedido() {
-		return pedido;
+	public List<Detalle> getDetalle() {
+		return detalle;
 	}
 
-	public void setPedido(Pedido pedido) {
-		this.pedido = pedido;
+	public void setDetalle(List<Detalle> detalle) {
+		this.detalle = detalle;
 	}
-
 	@Override
 	public String toString() {
-		return "Factura [id=" + id + ", fecha=" + fecha + ", total=" + total + ", cliente=" + cliente + ", pedido="
-				+ pedido + ", editable=" + editable + "]";
+		return "Pedido [id=" + id + ", fecha=" + fecha + ", estado=" + estado + ", cliente=" + cliente + ", detalle="
+				+ detalle + ", total=" + total + "]";
 	}
+	
 }

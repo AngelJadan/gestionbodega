@@ -30,6 +30,9 @@ public class Cliente implements Serializable {
 	@Column(name = "cli_correo", length = 250)
 	private String correo;
 	
+	@Column(name = "cli_estado")
+	private String estado;
+	
 	@Transient
 	private boolean editable;
 	
@@ -42,6 +45,15 @@ public class Cliente implements Serializable {
 		this.cedula = cedula;
 		this.direccion= direccion;
 		this.correo = correo;
+		// TODO Auto-generated constructor stub
+	}
+	public Cliente(String nombre, String apellido, String cedula, String direccion, String correo,String estado) {
+		this.nombre=nombre;
+		this.apellido= apellido;
+		this.cedula = cedula;
+		this.direccion= direccion;
+		this.correo = correo;
+		this.estado = estado;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -102,10 +114,17 @@ public class Cliente implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 	@Override
 	public String toString() {
 		return "Cliente [id=" + id + ", nombre=" + nombre + ", apellido=" + apellido + ", cedula=" + cedula
-				+ ", direccion=" + direccion + ", correo=" + correo + "]";
+				+ ", direccion=" + direccion + ", correo=" + correo + ", estado=" + estado + ", editable=" + editable
+				+ "]";
 	}
 	
 }

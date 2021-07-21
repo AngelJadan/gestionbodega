@@ -17,7 +17,8 @@ import ec.edu.ups.entidad.Usuario;
 
 
 @WebFilter({"/JSFsCreaBodega.xhtml","/JSFs/CrearCliente.xhtml","/JSFs/CrearClienteTrabajador.xhtml",
-	"/JSFs/CrearFactura.xhtml","'/JSFs/CrearProducto.xhtml","/JSFs/CrearTrabajo.xhtml"})
+	"/JSFs/CrearFactura.xhtml","'/JSFs/CrearProducto.xhtml","/JSFs/CrearTrabajo.xhtml"
+	,"/gestionbodega/LoginUsuarioController","http://localhost:8080/gestionbodega/JSFs/CrearProducto.xhtml"})
 public class Fitro implements Filter{
 
 	

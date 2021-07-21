@@ -34,13 +34,16 @@ public class ProductoBean implements Serializable {
 	private ProductoFacade ejbProductoFacade;
 	@EJB
 	private BodegaFacade ejbBodegaFacade;
-	
+		
 	private String nombre;
 	private double costo;
 	private int stock;
+	private String categoria;
 	private List<Producto> list;
 	private Producto producto;
 	private Bodega bodega;
+	private List<Bodega> listBodega;
+	private int idBodega;
 	
 	public ProductoBean() {
 		// TODO Auto-generated constructor stub
@@ -50,14 +53,21 @@ public class ProductoBean implements Serializable {
 	public void init() {
 		System.out.println("Ingreso");
 		producto = new Producto();
+		bodega=new Bodega();
+		listBodega = ejbBodegaFacade.findAll();
+		System.out.println("bodega: init() "+bodega.toString());
 		listar();
 		System.out.println("Listado de productos. "+list);
 	}
-	public String addProductsToBodeg(Bodega bodega) {
-		System.out.println(list.toString());
-		System.out.println("Datos de bodega"+bodega.toString());
+	public String addProductsToBodeg(Producto p,int bod) {
+		System.out.println("Entro");
+		System.out.println("Datos del producto: "+p.toString());
+		System.out.println("bodega: "+idBodega);
+		System.out.println("Datos de bodega"+bod);
+		System.out.println("bodega: "+idBodega);
 		//ejbBodegaFacade.edit(bodega);
-		return null;
+		return "";
+		
 	}
 	public void listAll() {
 		list=ejbProductoFacade.findAll();
@@ -81,7 +91,7 @@ public class ProductoBean implements Serializable {
 		System.out.println("Bodega: "+b.toString());
 		System.out.println("Guardando ");
 		
-		ejbProductoFacade.create(new Producto(this.nombre,this.costo,this.stock));
+		ejbProductoFacade.create(new Producto(this.nombre,this.costo,this.stock,this.categoria));
 		System.out.println("Guardado");
 		try {
 			list = listar();
@@ -158,6 +168,36 @@ public class ProductoBean implements Serializable {
 	}
 	public void setProducto(Producto producto) {
 		this.producto = producto;
+	}
+	public BodegaFacade getEjbBodegaFacade() {
+		return ejbBodegaFacade;
+	}
+	public void setEjbBodegaFacade(BodegaFacade ejbBodegaFacade) {
+		this.ejbBodegaFacade = ejbBodegaFacade;
+	}
+	public Bodega getBodega() {
+		return bodega;
+	}
+	public void setBodega(Bodega bodega) {
+		this.bodega = bodega;
+	}
+	public List<Bodega> getListBodega() {
+		return listBodega;
+	}
+	public void setListBodega(List<Bodega> listBodega) {
+		this.listBodega = listBodega;
+	}
+	public int getIdBodega() {
+		return idBodega;
+	}
+	public void setIdBodega(int idBodega) {
+		this.idBodega = idBodega;
+	}
+	public String getCategoria() {
+		return categoria;
+	}
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
 	}
 	
 }

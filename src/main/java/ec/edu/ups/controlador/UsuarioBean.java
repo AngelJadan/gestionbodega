@@ -10,9 +10,11 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.annotation.FacesConfig;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpSession;
 
 import ec.edu.ups.ejb.AbstractFacade;
 import ec.edu.ups.ejb.UsuarioFacade;
@@ -32,17 +34,26 @@ public class UsuarioBean implements Serializable {
 	private String tipo;
 	private String password;
 	private List<Usuario> list;
+	private Usuario userloguin;
 	
 	private Usuario usuario;
 	
-	public UsuarioBean() {
-		// TODO Auto-generated constructor stub
-	}
+	/*public UsuarioBean() {
+				
+		System.out.println("Ingreso");
+		usuario = new Usuario();
+		list = ejbUsuarioFacade.findAll();
+		System.out.println("Usuario logueado: "+userloguin);
+	}*/
 	@PostConstruct
 	public void init() {
 		System.out.println("Ingreso");
 		usuario = new Usuario();
 		list = ejbUsuarioFacade.findAll();
+		FacesContext fctx = FacesContext.getCurrentInstance();
+		HttpSession session = (HttpSession) fctx.getExternalContext().getSession(false);
+		userloguin = (Usuario) session.getAttribute("usuario");
+		System.out.println("Usuario logueado: "+userloguin);
 	}
 	
 	public String save() {
@@ -126,5 +137,12 @@ public class UsuarioBean implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+	public Usuario getUserloguin() {
+		return userloguin;
+	}
+	public void setUserloguin(Usuario userloguin) {
+		this.userloguin = userloguin;
+	}
+	
 	
 }

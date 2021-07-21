@@ -76,6 +76,7 @@ public class BodegaBean implements Serializable {
 		return null;
 	}
 	public String delete(Bodega b) {
+		System.out.println("Bodega a eliminar: "+b.toString());
 		ejbBodeFacade.remove(b);
 		list = ejbBodeFacade.findAll();
 		return null;

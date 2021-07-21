@@ -2,7 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html">
+	xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:a4j="http://richfaces.org/a4j">
 
 <h:head>
 	<title>Administración de producto</title>
@@ -82,11 +83,22 @@
 				</button>
 				<div class="collapse navbar-collapse justify-content-end">
 					<ul class="navbar-nav">
+						<li>
+							<form>
+								<h:outputLabel value="Usuario: #{usuarioBean.userloguin.nombre}" />
+								</form>
+						</li>
 						<li class="nav-item"><a class="nav-link" href="javascript:;">
 								<i class="material-icons">notifications</i> Notifications
 						</a></li>
 						<li class="nav-item"><a class="nav-link" href="javascript:;">
 								<i class="material-icons">profile</i> Perfil
+						</a></li>
+					</ul>
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link"
+							href="/gestionbodega/LoginUsuarioController?logout"> <i
+								class="material-icons">cerrar</i>Cerrar sessión
 						</a></li>
 					</ul>
 				</div>
@@ -97,13 +109,14 @@
 				<div class="container-fluid">
 					<h:form>
 						<h:panelGrid>
-							
 							<h:outputLabel value="Nombre" />
 							<h:inputText value="#{productoBean.nombre}" />
 							<h:outputLabel value="Costo" />
 							<h:inputText value="#{productoBean.costo}" />
 							<h:outputLabel value="Stock" />
 							<h:inputText value="#{productoBean.stock}" />
+							<h:outputLabel value="Categoria" />
+							<h:inputText value="#{productoBean.categoria}" />
 
 							<h:commandButton action="#{productoBean.save(bodegaBean.bodega)}"
 								value="Guardar" />
@@ -145,9 +158,25 @@
 							</h:column>
 							<h:column>
 								<f:facet name="header">Bodega</f:facet>
-								<f:selectItems value="#{bodegaBean.list}" var="d">
-									<h:outputLabel value="#{d.nombre}" />
-								</f:selectItems>
+								
+								<!--<h:selectOneMenu value="#{productoBean.bodega.id}" class="form-control form-control-sm">
+									<f:selectItems value="#{productoBean.listBodega}" var="bod" itemLabel="#{bod.nombre}"></f:selectItems>
+								</h:selectOneMenu>
+								 -->
+								
+								<h:selectOneMenu value="#{productoBean.idBodega}">
+									<f:selectItems value="#{productoBean.listBodega}" var="bod" itemValue="#{bod.id}" itemLabel="#{bod.nombre}">
+									</f:selectItems>
+								</h:selectOneMenu>
+								
+								<!-- <h:selectManyListbox value="#{productoBean.bodega.id}">
+									<f:selectItems value="#{productoBean.listBodega}" var="bod" itemLabel="#{bod.nombre}"></f:selectItems>
+								</h:selectManyListbox>
+								 -->
+								 
+							</h:column>
+							<h:column>
+								<h:commandButton action="#{productoBean.addProductsToBodeg(p,productoBean.idBodega)}" value="Agregar" />
 							</h:column>
 						</h:dataTable>
 					</div>

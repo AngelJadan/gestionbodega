@@ -37,6 +37,9 @@ public class Producto implements Serializable {
 	@Column(name = "pro_stock")
 	private int stock;
 	
+	@Column(name = "pro_categoria", length = 20)
+	private String categoria;
+	
 	@Transient
 	private boolean editable;
 	
@@ -46,12 +49,25 @@ public class Producto implements Serializable {
 	public Producto() {
 		// TODO Auto-generated constructor stub
 	}
+	public Producto(int id, String nombre, double costo) {
+		this.id = id;
+		this.nombre = nombre;
+		this.costo = costo;
+	}
 
 	public Producto(String nombre, double costo, int stock) {
 		this.nombre = nombre;
 		this.costo = costo;
 		this.stock = stock;
 	}
+	
+	public Producto(String nombre, double costo, int stock, String categoria) {
+		this.nombre = nombre;
+		this.costo = costo;
+		this.stock = stock;
+		this.categoria = categoria;
+	}
+
 
 	public int getId() {
 		return id;
@@ -101,10 +117,19 @@ public class Producto implements Serializable {
 		this.selected = selected;
 	}
 
+	public String getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(costo);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
@@ -125,6 +150,11 @@ public class Producto implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Producto other = (Producto) obj;
+		if (categoria == null) {
+			if (other.categoria != null)
+				return false;
+		} else if (!categoria.equals(other.categoria))
+			return false;
 		if (Double.doubleToLongBits(costo) != Double.doubleToLongBits(other.costo))
 			return false;
 		if (editable != other.editable)
@@ -145,7 +175,7 @@ public class Producto implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Producto [id=" + id + ", nombre=" + nombre + ", costo=" + costo + ", stock=" + stock + ", editable="
-				+ editable + ", selected=" + selected + "]";
+		return "Producto [id=" + id + ", nombre=" + nombre + ", costo=" + costo + ", stock=" + stock + ", categoria="
+				+ categoria + ", editable=" + editable + ", selected=" + selected + "]";
 	}	
 }

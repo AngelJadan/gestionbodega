@@ -39,8 +39,8 @@ public class Detalle implements Serializable {
 	private Producto producto;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "det_factura")
-	private Factura factura;
+	@JoinColumn(name = "det_pedido")
+	private Pedido pedido;
 	
 	public Detalle() {
 		// TODO Auto-generated constructor stub
@@ -49,6 +49,51 @@ public class Detalle implements Serializable {
 		this.cantidad = cantidad;
 		this.costo = costo;
 		this.cTotal = total;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		long temp;
+		temp = Double.doubleToLongBits(cTotal);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + cantidad;
+		temp = Double.doubleToLongBits(costo);
+		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + id;
+		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
+		result = prime * result + ((producto == null) ? 0 : producto.hashCode());
+		return result;
+	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Detalle other = (Detalle) obj;
+		if (Double.doubleToLongBits(cTotal) != Double.doubleToLongBits(other.cTotal))
+			return false;
+		if (cantidad != other.cantidad)
+			return false;
+		if (Double.doubleToLongBits(costo) != Double.doubleToLongBits(other.costo))
+			return false;
+		if (id != other.id)
+			return false;
+		if (pedido == null) {
+			if (other.pedido != null)
+				return false;
+		} else if (!pedido.equals(other.pedido))
+			return false;
+		if (producto == null) {
+			if (other.producto != null)
+				return false;
+		} else if (!producto.equals(other.producto))
+			return false;
+		return true;
 	}
 	public int getId() {
 		return id;
@@ -89,19 +134,15 @@ public class Detalle implements Serializable {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
-
-	public Factura getFactura() {
-		return factura;
+	public Pedido getPedido() {
+		return pedido;
 	}
-
-	public void setFactura(Factura factura) {
-		this.factura = factura;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
 	}
-
 	@Override
 	public String toString() {
 		return "Detalle [id=" + id + ", cantidad=" + cantidad + ", costo=" + costo + ", cTotal=" + cTotal
-				+ ", producto=" + producto + ", factura=" + factura + "]";
+				+ ", producto=" + producto + ", pedido=" + pedido + "]";
 	}
-	
 }

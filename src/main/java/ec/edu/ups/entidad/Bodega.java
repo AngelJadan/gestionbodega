@@ -23,6 +23,11 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "Bodegas")
 public class Bodega implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@SequenceGenerator(name = "bod_id_seq", sequenceName = "bod_id_seq", allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bod_id_seq")

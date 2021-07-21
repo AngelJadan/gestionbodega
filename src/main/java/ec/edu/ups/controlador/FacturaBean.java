@@ -99,9 +99,8 @@ public class FacturaBean implements Serializable {
 		
 		System.out.println("Factura: "+f.toString());
 		System.out.println("Guardando ");
-		
-		ejbFacturaFacade.create(new Factura(this.fecha,this.total,this.detalles));
-		System.out.println("Guardado");
+		ejbFacturaFacade.create(f);
+		System.out.println("Factura registrada");
 		
 		return "Datos guardados";
 	}
